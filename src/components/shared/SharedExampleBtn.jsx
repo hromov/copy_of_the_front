@@ -1,0 +1,1 @@
+export const SharedExampleBtn = () => <button>Example</button>

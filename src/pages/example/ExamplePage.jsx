@@ -1,1 +1,10 @@
-export const Example = () => <h1>Hello team</h1>
+import { SharedExampleBtn } from '../../components/shared/SharedExampleBtn';
+
+export const Example = () => {
+  return (
+    <>
+      <h1>Hello team!</h1>
+      <SharedExampleBtn />
+    </>
+  );
+};
