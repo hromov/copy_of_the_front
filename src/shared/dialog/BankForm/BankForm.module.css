@@ -1,0 +1,4 @@
+.form {
+    padding: var(--main-gap) calc(var(--main-gap)*2);
+    display: grid;
+}

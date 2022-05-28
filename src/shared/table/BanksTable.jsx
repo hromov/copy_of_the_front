@@ -6,8 +6,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import styles from './BanksTable.module.css';
 
 export const BanksTable = (props) => {
+    const clickHandler = (bank) => {
+        console.log(bank)
+        props.onSelection(bank)
+    }
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -25,7 +30,7 @@ export const BanksTable = (props) => {
                         <TableRow
                             key={row.name}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                            <TableCell component="th" scope="row">
+                            <TableCell component="th" scope="row" onClick={() => clickHandler(row)} className={styles.name}>
                                 {row.name}
                             </TableCell>
                             <TableCell align="right">{row.interest}</TableCell>
