@@ -17,8 +17,13 @@ export const Settings = () => {
   };
 
   const handleClose = (value) => {
+    //TODO: dispatch event here. Show error and do not close if there is one
+    if (value) {
+      console.log(`save the bank: ${value}`)
+      setSelectedBank(value);
+    }
     setOpen(false);
-    setSelectedBank(value);
+    
   };
 
   return (

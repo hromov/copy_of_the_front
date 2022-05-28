@@ -6,18 +6,25 @@ import * as yup from 'yup';
 const validationSchema = yup.object({
     name: yup
         .string()
+        .max(30, `Can't be more then 30 characters`)
         .required('Name is required'),
     max_loan: yup
         .number()
+        .min(1, `Can't be less than 1`)
         .required('Max Loan is required'),
     min_down: yup
         .number()
+        .min(0, `Can't be less than 0`)
+        .max(1, 'From 0 to 1')
         .required('Min Down is required'),
     interest: yup
         .number()
+        .min(0, `Can't be less than 0`)
+        .max(1, 'From 0 to 1')
         .required('Interest is required'),
     term: yup
         .number()
+        .min(0, `Can't be less than 0`)
         .required('Term is required'),
 });
 
@@ -72,7 +79,7 @@ export const MaterialBankForm = (props) => {
                     fullWidth
                     id="min_down"
                     name="min_down"
-                    label="Min Down"
+                    label="Min Down %"
                     type="number"
                     value={formik.values.min_down}
                     onChange={formik.handleChange}
@@ -83,7 +90,7 @@ export const MaterialBankForm = (props) => {
                     fullWidth
                     id="interest"
                     name="interest"
-                    label="Interest Rate"
+                    label="Interest Rate %"
                     type="number"
                     value={formik.values.interest}
                     onChange={formik.handleChange}

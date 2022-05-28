@@ -8,7 +8,7 @@ export const BankDialog = (props) => {
   const { onClose, bank, open } = props;
 
   const handleClose = () => {
-    onClose(bank);
+    onClose(null);
   };
 
   const handleBankSave = (value) => {
@@ -18,7 +18,7 @@ export const BankDialog = (props) => {
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>Set backup account</DialogTitle>
-      <MaterialBankForm bank={props.bank} onSave={handleBankSave} />
+      <MaterialBankForm bank={bank} onSave={handleBankSave} />
     </Dialog>
   );
 }
