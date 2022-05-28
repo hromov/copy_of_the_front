@@ -1,38 +1,87 @@
-.App {
-  text-align: center;
+*, *::after, *::before {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root {
+  --abs-max: 1600px;
+  --b-radius: 6px;
+  --main-gap: 1.5rem;
+  --box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;
+  --accent: #FC5C7D;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.colored {
+  background: #f7ff00;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #db36a4, #f7ff00);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #db36a4, #f7ff00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.colored-2 {
+  background: #FC5C7D;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #6A82FB, #FC5C7D);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #6A82FB, #FC5C7D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+}
+
+.c-text {
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
+.error {
+  color: red;
+  margin-top: 5px;
+}
+.error:empty {
+  margin: 0;
+}
+
+.navbar {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  max-width: var(--abs-max);
+  width: 100%;
+  padding: 0 var(--main-gap);
+  margin: var(--main-gap) auto 0 auto;
 }
 
-.App-link {
-  color: #61dafb;
+.container {
+  display: grid;
+  max-width: var(--abs-max);
+  padding: 0 var(--main-gap) var(--main-gap);
+  gap: var(--main-gap);
+  margin: 0 auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.logo {
+  font-size: clamp(2rem, 1rem + 5vw, 3rem);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+h1 {
+  font-size: clamp(3rem, 2.5em + 5vw, 6rem);
+  text-align: center;
+  margin-bottom: var(--main-gap);
+}
+
+h2 {
+  font-size: clamp(2rem, 1.5em + 5vw, 4rem);
+  text-align: center;
+  margin-bottom: var(--main-gap);
+}
+
+h3 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: var(--main-gap);
+}
+
+p {
+  font-size: 1.5rem;
+  margin-bottom: var(--main-gap);
 }

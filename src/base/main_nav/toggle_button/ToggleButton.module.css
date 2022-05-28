@@ -1,0 +1,33 @@
+.toggle {
+    transform: translate(5%, 20%);
+    margin-top: -10px;
+    z-index: 1001;
+    background: transparent;
+}
+
+.toggle .bar {
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    transition: all 0.3s ease-in-out;
+    background: #fff;
+    display: block;
+}
+
+.toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.toggle.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.toggle.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+@media screen and (min-width: 50em) {
+    .toggle {
+        display: none;
+    }
+}
