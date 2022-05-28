@@ -44,7 +44,6 @@
   align-items: center;
   max-width: var(--abs-max);
   width: 100%;
-  padding: 0 var(--main-gap);
   margin: var(--main-gap) auto 0 auto;
 }
 
