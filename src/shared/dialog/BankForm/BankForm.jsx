@@ -29,14 +29,15 @@ const validationSchema = yup.object({
 });
 
 export const MaterialBankForm = (props) => {
+    console.log(props)
     const bank = props.bank
     const formik = useFormik({
         initialValues: {
-            name: bank.name,
-            interest: bank.interest,
-            min_down: bank.min_down,
-            max_loan: bank.max_loan,
-            term: bank.term
+            name: bank.name || 'New Bank',
+            interest: bank.interest || 0.1,
+            min_down: bank.min_down || 0.15,
+            max_loan: bank.max_loan || 10000,
+            term: bank.term || 12
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
@@ -97,6 +98,12 @@ export const MaterialBankForm = (props) => {
                     error={formik.touched.interest && Boolean(formik.errors.interest)}
                     helperText={formik.touched.interest && formik.errors.interest}
                 />
+                {/* <Slider
+                    value={formik.values.interest}
+                    onChange={formik.handleChange}
+                    step={1}
+                    min={0}
+                    max={100} /> */}
                 <TextField
                     fullWidth
                     id="term"

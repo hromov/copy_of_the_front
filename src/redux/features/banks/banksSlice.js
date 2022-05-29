@@ -8,7 +8,28 @@ export const banksSlice = createSlice({
   },
   reducers: {
       loadBanks: (state, action) => {
-          state.banks = action.banks
+        return {
+          ...state,
+          banks: action.banks
+        }
+      },
+      bankChanged: (state, action) => {
+        const bank = action.payload.bank
+        let banks = [...state.banks];
+        if (bank.id === undefined) {
+          banks.push(bank);
+          return {
+            ...state,
+            banks: banks
+          }
+        } else {
+          const index = banks.findIndex((b) => b.id === bank.id);
+          banks[index] = bank;
+          return {
+            ...state,
+            banks: banks
+          }
+        }
       }
     // increment: (state) => {
     //   // Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -27,6 +48,6 @@ export const banksSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = banksSlice.actions
+export const { loadBanks, bankChanged } = banksSlice.actions
 
 export default banksSlice.reducer
