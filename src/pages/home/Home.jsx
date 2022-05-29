@@ -7,7 +7,6 @@ export const Home = () => {
 
   return (
     <main>
-      <h1>Home</h1>
       <section className={styles.calc}>
         <Calc banks={banksState.banks} />
       </section>

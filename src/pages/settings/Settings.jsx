@@ -58,7 +58,7 @@ export const Settings = () => {
 
   return (
     <main>
-      <h1>Settings</h1>
+      <h2>Settings</h2>
       <BanksTable banks={banksState.banks} onSelection={handleSelection} onDelete={handleDelete}/>
       <ErrorMessage error={deleteError} />
       <br />
