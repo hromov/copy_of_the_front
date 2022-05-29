@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import styles from "./BankForm.module.css";
 import * as yup from 'yup';
@@ -29,7 +29,6 @@ const validationSchema = yup.object({
 });
 
 export const MaterialBankForm = (props) => {
-    console.log(props)
     const bank = props.bank
     const formik = useFormik({
         initialValues: {
@@ -46,7 +45,6 @@ export const MaterialBankForm = (props) => {
                     ...props.bank,
                     ...values,
                 }
-                console.log(newBank)
                 props.onSave(newBank)
             }, 400);
         }
@@ -115,69 +113,8 @@ export const MaterialBankForm = (props) => {
                     error={formik.touched.term && Boolean(formik.errors.term)}
                     helperText={formik.touched.term && formik.errors.term}
                 />
-                <button className="colored-2" type="submit">
-                    Calc
-                </button>
+                <Button variant="contained" type="submit" disabled={!formik.dirty && bank.id !== undefined}>Save</Button>
             </form>
         </div>
     );
 };
-
-// export const BankForm = (props) => {
-//     const bank = props.bank
-//     return (
-//         <Formik
-//             initialValues={{ name: bank.name, interest: bank.interest, min_down: bank.min_down, max_loan: bank.max_loan, term: bank.term }}
-//             validate={values => {
-//                 const errors = {};
-//                 if (!values.name) {
-//                     errors.name = 'Required';
-//                 }
-//                 if (!values.interest) {
-//                     errors.interest = 'Required';
-//                 }
-//                 if (!values.max_loan) {
-//                     errors.max_loan = 'Required'
-//                 }
-//                 if (!values.min_down) {
-//                     errors.min_down = 'Required'
-//                 }
-//                 if (!values.term) {
-//                     errors.term = 'Required'
-//                 }
-//                 return errors;
-//             }}
-//             onSubmit={(values, { setSubmitting }) => {
-//                 setTimeout(() => {
-//                     const newBank = {
-//                         ...props.bank,
-//                         ...values,
-//                     }
-//                     console.log(newBank)
-//                     props.onSave(newBank)
-//                     // alert(JSON.stringify(values, null, 2));
-//                     setSubmitting(false);
-//                 }, 400);
-//             }}
-//         >
-//             {({ isSubmitting }) => (
-//                 <Form className={styles.form}>
-//                     <Field type="text" name="name" component={TextField} label="Name" />
-//                     <ErrorMessage name="name" component="div" className="error" />
-//                     <Field type="number" name="max_loan" component={TextField} label="Max Loan" />
-//                     <ErrorMessage name="max_loan" component="div" className="error" />
-//                     <Field type="number" name="min_down" component={TextField} label="Min Down" />
-//                     <ErrorMessage name="min_down" component="div" className="error" />
-//                     <Field type="number" name="interest" component={TextField} label="Interest Rate" />
-//                     <ErrorMessage name="interest" component="div" className="error" />
-//                     <Field type="number" name="term" component={TextField} label="Term" />
-//                     <ErrorMessage name="term" component="div" className="error" />
-
-//                     <button className="colored-2" type="submit" disabled={isSubmitting}>
-//                         Calc
-//                     </button>
-//                 </Form>
-//             )}
-//         </Formik>
-//     )
-// }

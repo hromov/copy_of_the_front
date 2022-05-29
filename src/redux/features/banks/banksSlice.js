@@ -1,53 +1,50 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { initBanks } from './banksApi'
 
 export const banksSlice = createSlice({
   name: 'banks',
   initialState: {
-    banks: initBanks
+    banks: []
   },
   reducers: {
-      loadBanks: (state, action) => {
+    banksLoaded: (state, action) => {
+      return {
+        ...state,
+        banks: action.payload.banks
+      }
+    },
+    bankChanged: (state, action) => {
+      const bank = action.payload.bank;
+      let banks = [...state.banks];
+      const index = banks.findIndex((b) => b.id === bank.id);
+      if (index === -1) {
+        banks.push(bank);
         return {
           ...state,
-          banks: action.banks
+          banks: banks
         }
-      },
-      bankChanged: (state, action) => {
-        const bank = action.payload.bank
-        let banks = [...state.banks];
-        if (bank.id === undefined) {
-          banks.push(bank);
-          return {
-            ...state,
-            banks: banks
-          }
-        } else {
-          const index = banks.findIndex((b) => b.id === bank.id);
-          banks[index] = bank;
-          return {
-            ...state,
-            banks: banks
-          }
+      } else {
+        banks[index] = bank;
+        return {
+          ...state,
+          banks: banks
         }
       }
-    // increment: (state) => {
-    //   // Redux Toolkit allows us to write "mutating" logic in reducers. It
-    //   // doesn't actually mutate the state because it uses the Immer library,
-    //   // which detects changes to a "draft state" and produces a brand new
-    //   // immutable state based off those changes
-    //   state.value += 1
-    // },
-    // decrement: (state) => {
-    //   state.value -= 1
-    // },
-    // incrementByAmount: (state, action) => {
-    //   state.value += action.payload
-    // },
-  },
+    },
+    bankDeleted: (state, action) => {
+      const id = action.payload.id;
+      let banks = [...state.banks];
+      const index = banks.findIndex((b) => b.id === id);
+      if (index !== -1) {
+        banks.splice(index, 1);
+      }
+      return {
+        ...state,
+        banks: banks
+      }
+    }
+  }
 })
 
-// Action creators are generated for each case reducer function
-export const { loadBanks, bankChanged } = banksSlice.actions
+export const { banksLoaded, bankChanged, bankDeleted } = banksSlice.actions
 
 export default banksSlice.reducer

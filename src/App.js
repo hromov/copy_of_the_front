@@ -4,6 +4,11 @@ import { ToggleMenu } from './base/main_nav/ToggleMenu';
 import { Home } from './pages/home/Home';
 import { Settings } from './pages/settings/Settings';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { getBanks } from './redux/features/banks/banksApi';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { banksLoaded } from './redux/features/banks/banksSlice';
+
 
 const darkTheme = createTheme({
   palette: {
@@ -11,7 +16,12 @@ const darkTheme = createTheme({
   },
 });
 
-function App() {
+export const App = () => {
+
+  //TODO: is it's the right place?
+  const dispatch = useDispatch();
+  getBanks().then(resp => dispatch(banksLoaded({banks: resp.data})))
+
   return (
     <ThemeProvider theme={darkTheme}>
       <div className='container'>
@@ -25,7 +35,7 @@ function App() {
         </Routes>
       </div>
     </ThemeProvider>
-  );
+  )
 }
 
 export default App;

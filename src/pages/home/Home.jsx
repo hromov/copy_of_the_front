@@ -4,7 +4,6 @@ import styles from './Home.module.css'
 
 export const Home = () => {
   const banksState = useSelector((state) => state.banks)
-  console.log(banksState)
 
   return (
     <main>

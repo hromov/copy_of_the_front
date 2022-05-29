@@ -9,24 +9,17 @@ const links = [
 ];
 
 
-export class ToggleMenu extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { active: false };
+export const ToggleMenu = () => {
+    let active = false;
+
+    const handleClick = () => {
+        active = !active
     }
 
-    handleClick = () => {
-        this.setState({
-            active: !this.state.active
-        });
-    }
-
-    render() {
-        return (
-            <>
-                <ToggleButton onPress={this.handleClick} active={this.state.active} />
-                <MenuLinks active={this.state.active} links={links} />
-            </>
-        )
-    }
+    return (
+        <>
+            <ToggleButton onPress={handleClick} active={active} />
+            <MenuLinks active={active} links={links} />
+        </>
+    )
 }
