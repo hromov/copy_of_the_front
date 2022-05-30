@@ -1,49 +1,22 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import './Calc.module.css'
-import * as yup from 'yup';
 import React from "react";
 import { MortgageInfo } from "./info/Info";
+import { SchemaValidator } from "./Validator";
 
 const initialValues = {
     loan: 10000, down: 3000, bank: '0'
 }
 
-const defLoanValidation = yup
-    .number()
-    .min(0, `Can't be less than 0`)
-    .required('Loan is required')
-const defDownValidation = yup
-    .number()
-    .min(0, `Can't be less than 0`)
-    .required('Down is required')
-
 export const Calc = (props) => {
+
     const banks = props.banks || []
-    let loan = initialValues.loan
-    let bank = null
-    
-    const getSchema = () => {
-        const min_down = loan * bank.interest;
-        let loanValidation = defLoanValidation;
-        let downValidation = defDownValidation;
 
-        if (bank) {
-            loanValidation = loanValidation.max(bank.max_loan, `${bank.name} can provide you only with ${bank.max_loan}`)
-            downValidation = downValidation.min(min_down, `Minimal down for ${loan} is ${min_down}`)
-            downValidation = downValidation.max(loan - 1, `It's not a loan. Do you want to deposit your money?`)
-        }
-
-        const schema = yup.object({
-            loan: loanValidation,
-            down: downValidation
-        });
-
-        return schema
-    }
+    let sv = new SchemaValidator(initialValues.loan, null)
 
     const handleUpdate = (values) => {
-        loan = values.loan
-        bank = values.bank
+        sv.setBank(values.bank)
+        sv.setLoan(values.loan)
     }
 
     return (
@@ -51,7 +24,7 @@ export const Calc = (props) => {
             <h2>Choose your <span className="colored c-text">bank</span></h2>
             <Formik
                 initialValues={initialValues}
-                validationSchema={getSchema}
+                validationSchema={sv.schema.bind(sv)}
             >
                 {() => (
                     <Form className="">
@@ -74,17 +47,3 @@ export const Calc = (props) => {
             </Formik>
         </>);
 }
-
-// TODO: make it work. Wasn't able to change validator dynamicly
-    // const [selectedBank, setSelectedBank] = React.useState(props.banks && props.banks.length ? props.banks[0] : null);
-    // const [schema, setSchema] = React.useState(selectedBank ? { ...initialSchema, bank: selectedBank.id } : initialSchema);
-    // const updateSchema = (name, value) => {
-    //     let newSchema = {
-    //         ...schema
-    //     }
-    //     switch (name) {
-    //         case 'bank':
-    //             console.log('bank changer')
-    //     }
-    //     setSchema(schema)
-    // }
