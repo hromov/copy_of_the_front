@@ -4,29 +4,54 @@ import * as yup from 'yup';
 import React from "react";
 import { MortgageInfo } from "./info/Info";
 
-const initialSchema = yup.object({
-    loan: yup
-        .number()
-        .min(0, `Can't be less than 0`)
-        .required('Loan is required'),
-    down: yup
-        .number()
-        .min(0, `Can't be less than 0`)
-        .required('Down is required'),
-});
-
 const initialValues = {
     loan: 10000, down: 3000, bank: '0'
 }
 
+const defLoanValidation = yup
+    .number()
+    .min(0, `Can't be less than 0`)
+    .required('Loan is required')
+const defDownValidation = yup
+    .number()
+    .min(0, `Can't be less than 0`)
+    .required('Down is required')
+
 export const Calc = (props) => {
     const banks = props.banks || []
+    let loan = initialValues.loan
+    let bank = null
+    
+    const getSchema = () => {
+        const min_down = loan * bank.interest;
+        let loanValidation = defLoanValidation;
+        let downValidation = defDownValidation;
+
+        if (bank) {
+            loanValidation = loanValidation.max(bank.max_loan, `${bank.name} can provide you only with ${bank.max_loan}`)
+            downValidation = downValidation.min(min_down, `Minimal down for ${loan} is ${min_down}`)
+            downValidation = downValidation.max(loan - 1, `It's not a loan. Do you want to deposit your money?`)
+        }
+
+        const schema = yup.object({
+            loan: loanValidation,
+            down: downValidation
+        });
+
+        return schema
+    }
+
+    const handleUpdate = (values) => {
+        loan = values.loan
+        bank = values.bank
+    }
+
     return (
         <>
             <h2>Choose your <span className="colored c-text">bank</span></h2>
             <Formik
                 initialValues={initialValues}
-                validationSchema={initialSchema}
+                validationSchema={getSchema}
             >
                 {() => (
                     <Form className="">
@@ -43,7 +68,7 @@ export const Calc = (props) => {
                             )))}
                         </Field>
                         <ErrorMessage name="bank" component="div" className="error" />
-                        <MortgageInfo banks={banks} />
+                        <MortgageInfo banks={banks} onUpdate={handleUpdate} />
                     </Form>
                 )}
             </Formik>

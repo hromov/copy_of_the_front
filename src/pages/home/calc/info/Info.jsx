@@ -4,14 +4,13 @@ import { ErrorMessage } from "../../../../shared/errors/errorMessage/ErrorMessag
 
 export const MortgageInfo = (props) => {
     const [info, setInfo] = React.useState('');
-    const banks = props.banks;
     const { values } = useFormikContext();
 
     React.useEffect(() => {
-        const bank = banks[values.bank];
+        const bank = props.banks[values.bank];
         const loan = values.loan;
         const down = values.down;
-        if (banks && banks.length) {
+        if (props.banks && props.banks.length) {
             const errors = checkLoan(bank, loan, down)
             if (errors) {
                 setInfo(<ErrorMessage error={errors} />)
@@ -21,9 +20,10 @@ export const MortgageInfo = (props) => {
             }
             
         }
+        props.onUpdate({loan, bank})
 
         // Submit the form imperatively as an effect as soon as form values.token are 6 digits long
-    }, [values, banks]);
+    }, [values, props]);
     return (info);
 };
 
