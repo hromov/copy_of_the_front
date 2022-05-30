@@ -5,6 +5,7 @@ export const getBanks = () => {
     return axios.get(`${rootPath}/banks`)
 }
 
+//TODO: is it appropriate to have only 1 method for create and update?
 export const saveBank = (bank) => {
     if (bank.id === undefined) {
         return axios.post(`${rootPath}/banks`, bank)

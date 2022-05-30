@@ -2,12 +2,11 @@ import React from 'react';
 import { MenuLinks } from './menu_links/MenuLink';
 import { ToggleButton } from './toggle_button/ToggleButton';
 
-//TODO: move to store
+//TODO: move to store or api or ?
 const links = [
     { id: 1, path: '/', name: 'Home' },
     { id: 2, path: '/settings', name: 'Settings' }
 ];
-
 
 export const ToggleMenu = () => {
     let active = false;
