@@ -25,7 +25,7 @@ export const BankDialog = (props) => {
   );
 }
 
-//TODO: not clear - why do we have it hear but no it other components?
+//TODO: not clear - why do we have it hear but not in the other components?
 BankDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,

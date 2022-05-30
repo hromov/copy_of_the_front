@@ -4,10 +4,10 @@ import { ToggleMenu } from './base/main_nav/ToggleMenu';
 import { Home } from './pages/home/Home';
 import { Settings } from './pages/settings/Settings';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { getBanks } from './redux/features/banks/banksApi';
+import { getBanks } from './features/banks/banksApi';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { banksLoaded } from './redux/features/banks/banksSlice';
+import { banksLoaded } from './features/banks/banksSlice';
 
 
 const darkTheme = createTheme({
@@ -18,7 +18,7 @@ const darkTheme = createTheme({
 
 export const App = () => {
 
-  //TODO: is it's the right place?
+  //TODO: is it's the right place? Has it be inside effects?
   const dispatch = useDispatch();
   getBanks().then(resp => dispatch(banksLoaded({banks: resp.data})))
 
