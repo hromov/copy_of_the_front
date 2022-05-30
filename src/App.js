@@ -1,13 +1,13 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { ToggleMenu } from './base/main_nav/ToggleMenu';
+import { ToggleMenu } from './common/ToggleMenu/ToggleMenu';
 import { Home } from './pages/home/Home';
 import { Settings } from './pages/settings/Settings';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { getBanks } from './features/banks/banksApi';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { banksLoaded } from './features/banks/banksSlice';
+import { getBanks } from './api/banksApi';
 
 
 const darkTheme = createTheme({
@@ -18,9 +18,9 @@ const darkTheme = createTheme({
 
 export const App = () => {
 
-  //TODO: is it's the right place? Has it be inside effects?
+  //TODO: is it's the right place? Has it be inside effects? Or shoud I make a container?
   const dispatch = useDispatch();
-  getBanks().then(resp => dispatch(banksLoaded({banks: resp.data})))
+  getBanks().then((banks) => dispatch(banksLoaded({banks: banks})))
 
   return (
     <ThemeProvider theme={darkTheme}>
