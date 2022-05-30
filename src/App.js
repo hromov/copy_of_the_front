@@ -7,8 +7,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { banksLoaded } from './features/banks/banksSlice';
-import { getBanks } from './api/banksApi';
-
+import { banksAPI } from './api/banksApi';
 
 const darkTheme = createTheme({
   palette: {
@@ -20,7 +19,7 @@ export const App = () => {
 
   //TODO: is it's the right place? Has it be inside effects? Or shoud I make a container?
   const dispatch = useDispatch();
-  getBanks().then((banks) => dispatch(banksLoaded({banks: banks})))
+  banksAPI.getBanks().then((banks) => dispatch(banksLoaded({banks: banks})))
 
   return (
     <ThemeProvider theme={darkTheme}>

@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Button } from "@mui/material";
 import { bankChanged, bankDeleted } from "../../features/banks/banksSlice";
 import { ErrorMessage } from "../../shared/errors/errorMessage/ErrorMessage";
-import { deleteBank, saveBank } from "../../api/banksApi";
+import { banksAPI } from "../../api/banksApi";
 
 export const Settings = () => {
   const banksState = useSelector((state) => state.banks)
@@ -30,7 +30,7 @@ export const Settings = () => {
   const handleClose = (bank) => {
     if (bank) {
       //TODO: is it's the right place?
-      saveBank(bank)
+      banksAPI.saveBank(bank)
         .then((resp) => {
           setSaveError('');
           dispatch(bankChanged({ bank: resp.data || bank }));
@@ -46,7 +46,7 @@ export const Settings = () => {
   };
 
   const handleDelete = (id) => {
-    deleteBank(id)
+    banksAPI.deleteBank(id)
       .then(() => {
         setDeleteError('');
         dispatch(bankDeleted({id: id}));
