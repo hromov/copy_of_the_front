@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { banksAPI } from '../../api/banksApi';
 
 export const banksSlice = createSlice({
   name: 'banks',
   initialState: {
-    banks: []
+    banks: [],
+    errors: [],
   },
   reducers: {
     banksLoaded: (state, action) => {
@@ -32,18 +34,41 @@ export const banksSlice = createSlice({
     },
     bankDeleted: (state, action) => {
       const id = action.payload.id;
-      let banks = [...state.banks];
-      const index = banks.findIndex((b) => b.id === id);
-      if (index !== -1) {
-        banks.splice(index, 1);
-      }
       return {
         ...state,
-        banks: banks
+        banks: state.banks.filter((b) => b.id !== id)
+      }
+    },
+    bankChangeError: (state, action) => {
+      return {
+        ...state,
+        errors: [...state.errors, action.payload.error]
+      }
+    },
+    bankErrorClosed: (state, action) => {
+      return {
+        ...state,
+        errors: state.errors.filter(i)
       }
     }
   }
 })
+
+export const saveTheBank = (bank) => {
+
+  return (dispatch) => {
+    banksAPI.saveBank(bank)
+        .then((resp) => {
+          // setSaveError('');
+          dispatch(bankChanged({ bank: resp.data || bank }));
+          // setOpen(false);
+        })
+        .catch((err) => {
+          console.log(err)
+          // setSaveError(err.message);
+        });
+  }
+}
 
 export const { banksLoaded, bankChanged, bankDeleted } = banksSlice.actions
 
