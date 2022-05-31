@@ -1,0 +1,7 @@
+.errors {
+    display: grid;
+    gap: 5px;
+}
+.actions {
+    text-align: right;
+}

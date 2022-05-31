@@ -3,16 +3,14 @@ import { BankDialog } from "../../shared/dialog/Dialog";
 import { BanksTable } from "../../shared/table/BanksTable";
 import * as React from 'react';
 import { Button } from "@mui/material";
-import { bankDeleted, saveTheBank } from "../../features/banks/banksSlice";
-import { ErrorMessage } from "../../shared/errors/errorMessage/ErrorMessage";
-import { banksAPI } from "../../api/banksApi";
+import { saveBank, deleteBank, selectBanks } from "../../features/banks/banksSlice";
+import { ErrorMessages } from "../../shared/errors/Errors";
+import styles from "./Settings.module.css";
 
 export const Settings = () => {
-  const banksState = useSelector((state) => state.banks)
 
+  const banks = useSelector(selectBanks);
   const [open, setOpen] = React.useState(false);
-  const [saveError, setSaveError] = React.useState('');
-  const [deleteError, setDeleteError] = React.useState('');
   const [selectedBank, setSelectedBank] = React.useState({});
 
   const dispatch = useDispatch();
@@ -28,48 +26,21 @@ export const Settings = () => {
   }
 
   const handleClose = (bank) => {
-    if (bank) {
-      dispatch(saveTheBank(bank));
-      setOpen(false);
-      // banksAPI.saveBank(bank)
-      //   .then((resp) => {
-      //     setSaveError('');
-      //     dispatch(bankChanged({ bank: resp.data || bank }));
-      //     setOpen(false);
-      //   })
-      //   .catch((err) => {
-      //     setSaveError(err.message);
-      //   });
-    } else {
-      setSaveError('');
-      setOpen(false);
-    }
+    bank && dispatch(saveBank(bank));
+    setOpen(false);
   };
 
   const handleDelete = (id) => {
-    banksAPI.deleteBank(id)
-      .then(() => {
-        setDeleteError('');
-        dispatch(bankDeleted({id: id}));
-      })
-      .catch((err) => setDeleteError(err.message));
+    dispatch(deleteBank(id));
   }
 
   return (
     <main>
       <h2>Settings</h2>
-      <BanksTable banks={banksState.banks} onSelection={handleSelection} onDelete={handleDelete}/>
-      <ErrorMessage error={deleteError} />
-      <br />
-      <Button variant="outlined" onClick={handleCreate}>
-        New Bank
-      </Button>
-      <BankDialog
-        bank={selectedBank}
-        open={open}
-        error={saveError}
-        onClose={handleClose}
-      />
+      <BanksTable banks={banks} onSelection={handleSelection} onDelete={handleDelete} />
+      <ErrorMessages />
+      <Button className={styles.button} variant="outlined" onClick={handleCreate}>New Bank</Button>
+      <BankDialog bank={selectedBank} open={open} onClose={handleClose} />
     </main>
   );
 };

@@ -5,19 +5,23 @@ const instance = axios.create({
 })
 
 export const banksAPI = {
-    getBanks() {
-        return instance.get('banks').then((resp) => resp.data)
+    async getBanks() {
+        const resp = await instance.get('banks');
+        return resp.data;
     },
 
     //TODO: is it appropriate to have only 1 method for create and update?
-    saveBank(bank) {
+    async saveBank(bank) {
         if (bank.id === undefined) {
-            return instance.post('banks', bank)
+            const resp = await instance.post('banks', bank);
+            return resp.data;
         }
-        return instance.put(`banks/${bank.id}`, bank)
+        const resp = await instance.put(`banks/${bank.id}`, bank)
+        return resp.data;
     },
 
-    deleteBank(id) {
-        return instance.delete(`banks/${id}`)
+    async deleteBank(id) {
+        const resp = await instance.delete(`banks/${id}`)
+        return resp.data;
     }
 }

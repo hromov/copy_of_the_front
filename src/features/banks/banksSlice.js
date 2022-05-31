@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { banksAPI } from '../../api/banksApi';
 
 export const banksSlice = createSlice({
@@ -45,31 +45,42 @@ export const banksSlice = createSlice({
         errors: [...state.errors, action.payload.error]
       }
     },
-    bankErrorClosed: (state, action) => {
+    hideBankErrors: (state) => {
       return {
         ...state,
-        errors: state.errors.filter(i)
+        errors: []
       }
     }
   }
 })
 
-export const saveTheBank = (bank) => {
-
-  return (dispatch) => {
-    banksAPI.saveBank(bank)
-        .then((resp) => {
-          // setSaveError('');
-          dispatch(bankChanged({ bank: resp.data || bank }));
-          // setOpen(false);
-        })
-        .catch((err) => {
-          console.log(err)
-          // setSaveError(err.message);
-        });
+export const saveBank = (bank) => {
+  return async (dispatch) => {
+    try {
+      const data = await banksAPI.saveBank(bank);
+      dispatch(bankChanged({ bank: data || bank }));
+    } catch (err) {
+      dispatch(bankChangeError({ error: err.message }));
+    }
   }
 }
 
-export const { banksLoaded, bankChanged, bankDeleted } = banksSlice.actions
+export const deleteBank = (id) => {
+  return async (dispatch) => {
+    try {
+      await banksAPI.deleteBank(id);
+      dispatch(bankDeleted({ id }));
+    } catch (err) {
+      dispatch(bankChangeError({ error: err.message }));
+    }
+  }
+}
+
+export const { banksLoaded, bankChanged, bankDeleted, bankChangeError, hideBankErrors } = banksSlice.actions
 
 export default banksSlice.reducer
+
+const selectBanksState = (state) => state.banks
+
+export const selectBanks = createSelector(selectBanksState, (state) => state.banks)
+export const selectErrors = createSelector(selectBanksState, (state) => state.errors)
