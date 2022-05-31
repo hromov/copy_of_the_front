@@ -38,13 +38,10 @@
   margin: 0;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: var(--abs-max);
-  width: 100%;
-  margin: var(--main-gap) auto 0 auto;
+.logo {
+  font-size: clamp(2rem, 1rem + 5vw, 3rem);
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .container {
@@ -53,13 +50,6 @@
   padding: 0 var(--main-gap) var(--main-gap);
   gap: var(--main-gap);
   margin: 0 auto;
-}
-
-
-.logo {
-  font-size: clamp(2rem, 1rem + 5vw, 3rem);
-  text-decoration: none;
-  white-space: nowrap;
 }
 
 h1 {

@@ -1,6 +1,4 @@
-import { Link, Route, Routes } from 'react-router-dom';
-import './App.css';
-import { ToggleMenu } from './common/ToggleMenu/ToggleMenu';
+import { Route, Routes } from 'react-router-dom';
 import { Home } from './pages/home/Home';
 import { Settings } from './pages/settings/Settings';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -8,6 +6,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { banksLoaded } from './features/banks/banksSlice';
 import { banksAPI } from './api/banksApi';
+import { Header } from './shared/header/Header';
+import './App.css';
 
 const darkTheme = createTheme({
   palette: {
@@ -24,10 +24,7 @@ export const App = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <div className='container'>
-        <nav className="navbar" id="menu">
-          <Link to="/" id="logo" className="logo colored c-text">Mortgage Calc</Link>
-          <ToggleMenu />
-        </nav>
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="settings" element={<Settings />} />
