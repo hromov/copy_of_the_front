@@ -1,7 +1,7 @@
 const axios = require('axios').default;
 
 const instance = axios.create({
-    baseURL: 'http://mortgage.eu-central-1.elasticbeanstalk.com/'
+    baseURL: 'https://back-dot-mortgage-test-347507.lm.r.appspot.com/'
 })
 
 export const banksAPI = {
